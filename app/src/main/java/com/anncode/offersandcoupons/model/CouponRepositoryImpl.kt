@@ -1,16 +1,13 @@
 package com.anncode.offersandcoupons.model
 
 import android.util.Log
-import com.anncode.offersandcoupons.R
-import com.anncode.offersandcoupons.presenter.CouponPresenter
-import com.anncode.offersandcoupons.view.RecyclerCouponsAdapter
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CouponRepositoryImpl(var couponPresenter: CouponPresenter): CouponRepository {
+class CouponRepositoryImpl: CouponRepository {
     //TODA la logica de conexión.
     override fun getCouponsAPI() {
         //CONTROLLER
@@ -33,7 +30,7 @@ class CouponRepositoryImpl(var couponPresenter: CouponPresenter): CouponReposito
                         Coupon(jsonObject)
                     coupons?.add(coupon)
                 }
-                couponPresenter.showCoupons(coupons)
+
 
             }
 
