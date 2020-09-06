@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(){
             androidx.recyclerview.widget.LinearLayoutManager(this)
 
 
-        //VIEW
+        //Call
 
 
 
