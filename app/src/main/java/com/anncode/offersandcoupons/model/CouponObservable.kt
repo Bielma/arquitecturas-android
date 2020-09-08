@@ -1,6 +1,7 @@
 package com.anncode.offersandcoupons.model
 
 import androidx.databinding.BaseObservable
+import androidx.lifecycle.MutableLiveData
 
 class CouponObservable: BaseObservable() {
     //Conexion directa con el repositirio
@@ -10,6 +11,9 @@ class CouponObservable: BaseObservable() {
     fun callCoupons(){
         couponRepository.callCouponsAPI()
     }
-    //VM
+    //ViewModel
+    fun getCoupons(): MutableLiveData<List<Coupon>>{
+        return couponRepository.getCouponsAPI()
+    }
 
 }

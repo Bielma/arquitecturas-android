@@ -2,16 +2,20 @@ package com.anncode.offersandcoupons.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
-import com.anncode.offersandcoupons.model.Coupon
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.anncode.offersandcoupons.R
+import com.anncode.offersandcoupons.databinding.ActivityMainBinding
+import com.anncode.offersandcoupons.model.Coupon
+import com.anncode.offersandcoupons.viewmodel.CouponViewModel
 
 class MainActivity : AppCompatActivity(){
 
 
-    private var rvCoupons: androidx.recyclerview.widget.RecyclerView? = null
+    private var couponsViewModel : CouponViewModel? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,18 +24,24 @@ class MainActivity : AppCompatActivity(){
 
 
         //VIEW
-        rvCoupons= findViewById(R.id.rvCoupons) //UI
-        rvCoupons?.layoutManager =
-            androidx.recyclerview.widget.LinearLayoutManager(this)
-
-
+        setupBindings(savedInstanceState)
         //Call
+    }
 
-
-
+    fun setupBindings(savedInstanceState: Bundle?){
+        var activityMainBinding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        couponsViewModel = ViewModelProviders.of(this).get(CouponViewModel::class.java)
+        activityMainBinding.setModel(couponsViewModel)
+        setupListUpdate()
 
     }
 
-
+    fun setupListUpdate(){
+        //callcupons
+        couponsViewModel?.callCoupons()
+        couponsViewModel?.getCoupons()?.observe(this, Observer {coupons:List<Coupon> ->
+            couponsViewModel?.setCouponsInRecyclerAdapter(coupons)
+        })
+    }
 
 }
